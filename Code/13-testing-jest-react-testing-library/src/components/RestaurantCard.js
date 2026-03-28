@@ -1,0 +1,47 @@
+import { CDN_URL } from '../utils/constants';
+const RestaurantCard = (props) => {
+  // const {
+  //   name,
+  //   costForTwo,
+  //   avgRating,
+  //   cuisines,
+  //   deliveryTime,
+  //   cloudinaryImageId,
+  // } = props.card?.card.info;
+  const info = props.resData?.card?.card?.info;
+  if (!info) return null; // 🔐 Skip if info is missing
+
+  const {
+    name,
+    costForTwo,
+    avgRating,
+    cuisines = [],
+    sla,
+    cloudinaryImageId,
+  } = info;
+  return (
+    <div className="res-card" style={{ backgroundColor: '#f0f0f0' }}>
+      <img
+        className="res-logo"
+        alt="res-logo"
+        src={CDN_URL + cloudinaryImageId}
+      />
+      <h3>{name}</h3>
+      <h4>{cuisines.join(', ')}</h4>
+      <h4>{avgRating}</h4>
+    </div>
+  );
+};
+
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label>Promoted</label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
+
+export default RestaurantCard;
